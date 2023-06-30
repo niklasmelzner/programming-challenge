@@ -1,0 +1,59 @@
+@startuml
+
+interface TableSource {
+
+    + DataTable loadData()
+
+}
+
+class CSVTableSource {
+    + CSVTableSource(file: File )
+}
+CSVTableSource -right-|> TableSource
+
+class "((JsonTableSource))" {
+    + JsonTableSource(file: File )
+}
+"((JsonTableSource))" -up-|> TableSource
+
+class  "((•••))"
+
+"((•••))" -up-|> TableSource
+
+class DataTable {
+    columns: List<TextColumn>
+    addColumn(column: TextColumn)
+}
+
+DataTable "1"-up-"*" TextColumn
+
+abstract class Column<T> {
+    name: String
+    T[] values
+    size(): int
+    get(index: int): T
+}
+note left of Column::get
+    write protection
+end note
+
+class TextColumn {
+    numericalColumn: NumericalColumn
+    toNumericalColumn(): NumericalColumn
+}
+note left of TextColumn::numericalColumn
+    buffer field for toNumericalColumn()
+    (initialize on requirement))
+end note
+
+class NumericalColumn {
+
+}
+
+TextColumn "1"-right-"0..1" NumericalColumn
+TextColumn -up-|> Column: "<<bind>>\nString"
+NumericalColumn -up-|> Column: "<<bind>>\nDouble"
+DataTable -left- TableSource
+
+
+@enduml
