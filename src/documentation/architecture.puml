@@ -28,16 +28,14 @@ end note
 "((•••))" -up-|> TableSource
 
 class DataTable {
-    columns: List<TextColumn>
-    addColumn(column: TextColumn)
-    getColumnCount(): int
-    getColumn(int: index): TextColumn
+    columns: Map<String, TextColumn>
+    addColumn(name: String, column: TextColumn)
+    getColumn(name: String): TextColumn
 }
 
 DataTable "1"-up-"*" TextColumn
 
 abstract class Column<T> {
-    name: String
     T[] values
     size(): int
     get(index: int): T

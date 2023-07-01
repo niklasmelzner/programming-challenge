@@ -7,8 +7,8 @@ package de.exxcellent.challenge.datatable;
 public class TextColumn extends Column<String> {
     private NumericalColumn numericalColumn;
 
-    public TextColumn(String name, String[] values) {
-        super(name, values);
+    public TextColumn(String[] values) {
+        super(values);
     }
 
     /**

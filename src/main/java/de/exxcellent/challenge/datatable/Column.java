@@ -6,11 +6,9 @@ package de.exxcellent.challenge.datatable;
  * @param <T> data type of the column
  */
 public class Column<T> {
-    private final String name;
     private final T[] values;
 
-    public Column(String name, T[] values) {
-        this.name = name;
+    public Column(T[] values) {
         this.values = values;
     }
 

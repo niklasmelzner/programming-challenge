@@ -5,8 +5,8 @@ package de.exxcellent.challenge.datatable;
  */
 public class NumericalColumn extends Column<Double>{
 
-    public NumericalColumn(String name, Double[] values) {
-        super(name, values);
+    public NumericalColumn(Double[] values) {
+        super(values);
     }
 
 }
