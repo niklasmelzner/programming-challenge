@@ -7,22 +7,31 @@ interface TableSource {
 }
 
 class CSVTableSource {
-    + CSVTableSource(file: File )
+    + CSVTableSource(inputStream: InputStream)
 }
 CSVTableSource -right-|> TableSource
 
 class "((JsonTableSource))" {
-    + JsonTableSource(file: File )
+    + JsonTableSource(inputStream: InputStream)
 }
 "((JsonTableSource))" -up-|> TableSource
 
-class  "((•••))"
+class "((•••))"
+
+note left of "(•••)"
+    Polymorph implementation
+    to allow storage of additional
+    information, that might be
+    required by, e.g., a web service.
+end note
 
 "((•••))" -up-|> TableSource
 
 class DataTable {
     columns: List<TextColumn>
     addColumn(column: TextColumn)
+    getColumnCount(): int
+    getColumn(int: index): TextColumn
 }
 
 DataTable "1"-up-"*" TextColumn
