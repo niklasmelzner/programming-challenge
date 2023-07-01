@@ -16,7 +16,7 @@ public class CSVTableSource implements TableSource {
      * @param inputStream data-stream in CSV-format
      * @throws IOException if {@link InputStream#readAllBytes()} fails
      */
-    CSVTableSource(InputStream inputStream) throws IOException {
+    public CSVTableSource(InputStream inputStream) throws IOException {
         // read data from stream
         String data = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
@@ -32,7 +32,7 @@ public class CSVTableSource implements TableSource {
         for (int lineIndex = 1; lineIndex < lines.length; lineIndex++) {
             String[] values = lines[lineIndex].split(",");
             for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
-                columns[valueIndex][lineIndex] = values[valueIndex];
+                columns[valueIndex][lineIndex - 1] = values[valueIndex];
             }
         }
 

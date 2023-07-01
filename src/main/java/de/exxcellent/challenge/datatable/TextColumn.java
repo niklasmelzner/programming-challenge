@@ -16,7 +16,7 @@ public class TextColumn extends Column<String> {
      * The copies are independent, changes in the returned object will not reflect in this instance.
      * The method will return the same object on every method call.
      */
-    NumericalColumn toNumericalColumn() {
+    public NumericalColumn toNumericalColumn() {
         throw new UnsupportedOperationException("not implemented");
     }
 }

@@ -17,6 +17,10 @@ public class DataTable {
         throw new UnsupportedOperationException("not implemented");
     }
 
+    public static class ColumnNotFoundException extends RuntimeException {
+
+    }
+
 
 }
 
