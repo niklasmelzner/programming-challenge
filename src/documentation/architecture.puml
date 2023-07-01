@@ -2,7 +2,7 @@
 
 interface TableSource {
 
-    + DataTable loadData()
+    + DataTable getData()
 
 }
 

@@ -5,7 +5,7 @@ package de.exxcellent.challenge.datatable;
  */
 public interface TableSource {
 
-    DataTable loadData();
+    DataTable getData();
 
 }
 
