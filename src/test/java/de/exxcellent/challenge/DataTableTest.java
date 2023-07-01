@@ -40,7 +40,7 @@ public class DataTableTest {
     @Test
     public void verifyDataTest() throws IOException {
         DataTable table = loadTable();
-        NumericalColumn column = table.getColumn("Mxt").toNumericalColumn();
+        NumericalColumn column = table.getColumn("MxT").toNumericalColumn();
         Assertions.assertEquals(90, column.get(4));
     }
 
