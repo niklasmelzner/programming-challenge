@@ -14,13 +14,20 @@ public class DataTable {
     }
 
     public TextColumn getColumn(String name) {
-        throw new UnsupportedOperationException("not implemented");
+        TextColumn column = columns.get(name);
+        if (column == null) {
+            throw new ColumnNotFoundException(name);
+        }
+        return column;
     }
 
     public static class ColumnNotFoundException extends RuntimeException {
 
-    }
+        ColumnNotFoundException(String name) {
+            super("Column '" + name + "' was not found in this data table");
+        }
 
+    }
 
 }
 
