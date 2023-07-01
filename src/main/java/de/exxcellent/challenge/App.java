@@ -50,7 +50,7 @@ public final class App {
 
         double minDifference = Double.MAX_VALUE;
         int minDifferenceIndex = -1;
-        // iterate over table, store result for minimum temperature spread
+        // iterate over table, store index for minimum value distance
         for (int instanceIndex = 0; instanceIndex < firstColumn.size(); instanceIndex++) {
             double difference = Math.abs(firstColumn.get(instanceIndex) - secondColumn.get(instanceIndex));
             if (difference >= minDifference) {
