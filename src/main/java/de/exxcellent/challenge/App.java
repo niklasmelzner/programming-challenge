@@ -3,7 +3,6 @@ package de.exxcellent.challenge;
 import de.exxcellent.challenge.datatable.CSVTableSource;
 import de.exxcellent.challenge.datatable.DataTable;
 import de.exxcellent.challenge.datatable.NumericalColumn;
-import de.exxcellent.challenge.datatable.TextColumn;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,6 +18,7 @@ public final class App {
 
     /**
      * This is the main entry method of your program.
+     *
      * @param args The CLI arguments passed
      */
     public static void main(String... args) {
@@ -26,40 +26,46 @@ public final class App {
         // Your preparation code …
         DataTable weatherTable = loadTableFromResource("weather.csv");
 
-        String dayWithSmallestTempSpread = findDayWithSmallestTempSpread(weatherTable);     // Your day analysis function call …
+        String dayWithSmallestTempSpread = weatherTable.getColumn("Day").get(
+                findIndexWithMinAbsDistance(weatherTable, "MnT", "MxT")
+        );     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
+        DataTable footballTable = loadTableFromResource("football.csv");
+
+        String teamWithSmallestGoalSpread = footballTable.getColumn("Team").get(
+                findIndexWithMinAbsDistance(footballTable, "Goals", "Goals Allowed")
+        );      // Your goal analysis function call …
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
     }
 
     /**
-     * Returns the first day having the smallest temperature spread
-     * @param weatherTable table containing weather data
-     * @return Day with the smallest temperature spread
+     * The order of provided columns doesn't mather
+     * Returns the first instance having the smallest distance between the two columns
+     * @return Instance index, -1 if the table is empty
      */
-    private static String findDayWithSmallestTempSpread(DataTable weatherTable) {
-        TextColumn day = weatherTable.getColumn("Day");
-        NumericalColumn maximumTemp = weatherTable.getColumn("MxT").toNumericalColumn();
-        NumericalColumn minimumTemp = weatherTable.getColumn("MnT").toNumericalColumn();
+    private static int findIndexWithMinAbsDistance(DataTable table, String firstColumnName, String secondColumnName) {
+        NumericalColumn firstColumn = table.getColumn(firstColumnName).toNumericalColumn();
+        NumericalColumn secondColumn = table.getColumn(secondColumnName).toNumericalColumn();
 
         double minDifference = Double.MAX_VALUE;
-        String minDifferenceDay = null;
+        int minDifferenceIndex = -1;
         // iterate over table, store result for minimum temperature spread
-        for (int instanceIndex = 0; instanceIndex < day.size(); instanceIndex++) {
-            double difference =  maximumTemp.get(instanceIndex) - minimumTemp.get(instanceIndex);
-            if (difference>=minDifference) {
+        for (int instanceIndex = 0; instanceIndex < firstColumn.size(); instanceIndex++) {
+            double difference = Math.abs(firstColumn.get(instanceIndex) - secondColumn.get(instanceIndex));
+            if (difference >= minDifference) {
                 continue;
             }
             minDifference = difference;
-            minDifferenceDay = day.get(instanceIndex);
+            minDifferenceIndex = instanceIndex;
         }
 
-        return minDifferenceDay;
+        return minDifferenceIndex;
     }
 
     /**
      * Loads data from an {@link InputStream} using {@link CSVTableSource}
+     *
      * @param resourceName name of the resource (in the scope of {@link App})
      * @return data in form of a {@link DataTable}
      */
